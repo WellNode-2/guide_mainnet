@@ -4,10 +4,6 @@
 TELEGRAM_BOT_TOKEN=""
 CHAT_ID=""
 
-# URL для запиту JSON-RPC
-URL="http://127.0.0.1:9944"
-JSON_DATA='{"jsonrpc":"2.0","method":"bioauth_status","params":[],"id":1}'
-
 # Функція для надсилання повідомлення в Telegram
 send_telegram_message() {
   echo "$1"
@@ -19,11 +15,7 @@ send_telegram_message() {
 # Основна функція
 check_bioauth_status() {
   # Запит до сервера
-  response=$(curl -s -X POST -H "Content-Type: application/json" -d "${JSON_DATA}" "${URL}")
-    # {"jsonrpc":"2.0","result":{"Active":{"expires_at":1724876958000}},"id":1}
-    # {"jsonrpc":"2.0","result":"Inactive","id":1}
-
-  # Перевірка на відповідь сервера
+  response=$(curl -s -X POST http://localhost:9933 -H "Content-Type: application/json" -d '{"jsonrpc": "2.0", "id": 1, "method": "bioauth_status", "params": []}')
   if [ -z "$response" ]; then
     send_telegram_message "⛔ HumaNode is not answer!!!"
     return
