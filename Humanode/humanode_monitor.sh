@@ -15,7 +15,7 @@ send_telegram_message() {
 # Основна функція
 check_bioauth_status() {
   # Запит до сервера
-  response=$(curl -s -X POST http://localhost:9933 -H "Content-Type: application/json" -d '{"jsonrpc": "2.0", "id": 1, "method": "bioauth_status", "params": []}')
+  response=$(curl -s -X POST http://localhost:9944 -H "Content-Type: application/json" -d '{"jsonrpc": "2.0", "id": 1, "method": "bioauth_status", "params": []}')
   if [ -z "$response" ]; then
     send_telegram_message "⛔ HumaNode is not answer!!!"
     return
