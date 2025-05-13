@@ -13,7 +13,7 @@ cp -r $HOME/massa/massa-client/wallets $HOME/backup/wallets_bakup
 ```
 cd $HOME
 rm -rf $HOME/massa
-wget https://github.com/massalabs/massa/releases/download/MAIN.2.4/massa_MAIN.2.4_release_linux.tar.gz
+wget https://github.com/massalabs/massa/releases/download/MAIN.2.5/massa_MAIN.2.5_release_linux.tar.gz
 tar zxvf massa_MAIN.2.4_release_linux.tar.gz
 rm massa_MAIN.2.4_release_linux.tar.gz
 ```
@@ -35,7 +35,28 @@ EOF
 sed -i.bak -e "s/retry_delay =.*/retry_delay = 10000/; " $HOME/massa/massa-node/base_config/config.toml
 ```
 
-## Start service
+## Update Service file
 ```
+sudo tee /etc/systemd/system/massad.service > /dev/null <<EOF
+[Unit]
+Description=Massa
+After=network-online.target
+
+[Service]
+User=$USER
+WorkingDirectory=$HOME/massa/massa-node
+ExecStart=$HOME/massa/massa-node/massa-node -a -p <--YOUR_PASSWORD-->
+Restart=on-failure
+RestartSec=3
+LimitNOFILE=65535
+
+[Install]
+WantedBy=multi-user.target
+EOF
+```
+
+## Restart service
+```
+sudo systemctl daemon-reload && sudo systemctl enable massad
 sudo systemctl restart massad && sudo journalctl -u massad -f
 ```
