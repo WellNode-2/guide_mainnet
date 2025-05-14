@@ -13,9 +13,8 @@ cp -r $HOME/massa/massa-client/wallets $HOME/backup/wallets_bakup
 ```
 cd $HOME
 rm -rf $HOME/massa
-wget https://github.com/massalabs/massa/releases/download/MAIN.2.5/massa_MAIN.2.5_release_linux.tar.gz
-tar zxvf massa_MAIN.2.4_release_linux.tar.gz
-rm massa_MAIN.2.4_release_linux.tar.gz
+wget https://github.com/massalabs/massa/releases/download/MAIN.2.5.1/massa_MAIN.2.5.1_release_linux.tar.gz
+tar zxvf massa_MAIN.2.5.1_release_linux.tar.gz
 ```
 
 ## Restore keys
